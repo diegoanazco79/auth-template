@@ -54,8 +54,8 @@ const useLogin = () => {
   }
 
   /**
-   * Function to handle the visibility of the password
-   * @param data
+   * Function to handle the submit of the form
+   * @param data 
    */
   const onSubmitLogin = (data: LoginFormInput) => {
     console.log(data)

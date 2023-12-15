@@ -1,39 +1,27 @@
-import {
-  Button, Card, Divider, IconButton, Link, Stack, TextField,
-  Typography
-} from "@mui/material"
 import { Controller } from "react-hook-form"
+import { Card, IconButton, Stack, TextField, Typography } from "@mui/material"
+import LoadingButton from '@mui/lab/LoadingButton'
 
-import useLogin from "./hooks/useLogin"
+import useSignup from "./hooks/useSignup"
 
-import cocodrileLogin from '../../assets/cocodrile-login.png'
 import Visibility from "@mui/icons-material/Visibility"
 import VisibilityOff from "@mui/icons-material/VisibilityOff"
+import cocodrileLogin from '../../assets/cocodrile-login.png'
+import { mainContainerStyles, signupCardStyles } from "./styles"
 
-import { loginCardStyles, mainContainerStyles } from "./styles"
-
-const LoginPage = () => {
-
-  const {
-    showPassword, passwordVisited, control, errors,
-    handleClickShowPassword, handleMouseDownPassword,
-    handleTextFieldFocus, handleTextFieldBlur, handleSubmit,
-    onSubmitLogin
-  } = useLogin()
+const SignupPage = () => {
+  const { 
+    control, errors, showPassword, passwordVisited, loadingSignup,
+    handleClickShowPassword, handleMouseDownPassword, handleTextFieldFocus,
+    handleTextFieldBlur, onSubmitSignup, handleSubmit
+  } = useSignup()
 
   return (
     <div style={mainContainerStyles}>
-      <Card sx={loginCardStyles}>
+      <Card sx={signupCardStyles}>
         <img src={cocodrileLogin} width={110} style={{margin:15}}/>
         <Stack spacing={3}>
-          <Typography variant='h4'>Log In</Typography>
-          <Button variant='outlined' fullWidth>
-            Google Login Button
-          </Button>
-          <Divider>
-            <Typography variant='body2'>Or</Typography>
-          </Divider>
-          <Typography variant='body1'>Log in using email address</Typography>
+          <Typography variant='h4'>Sign Up</Typography>
           <Controller
             name='email'
             control={control}
@@ -49,6 +37,38 @@ const LoginPage = () => {
           />
           <Typography variant='error'>
             {errors.email?.message}
+          </Typography>
+          <Controller
+            name='firstName'
+            control={control}
+            render={({ field }) => (
+              <TextField
+                {...field}
+                error={errors.firstName?.message !== undefined}
+                label='First Name'
+                variant='filled'
+                placeholder='Type your first name'
+              />
+            )}
+          />
+          <Typography variant='error'>
+            {errors.firstName?.message}
+          </Typography>
+          <Controller
+            name='lastName'
+            control={control}
+            render={({ field }) => (
+              <TextField
+                {...field}
+                error={errors.lastName?.message !== undefined}
+                label='Last Name'
+                variant='filled'
+                placeholder='Type your last name'
+              />
+            )}
+          />
+          <Typography variant='error'>
+            {errors.lastName?.message}
           </Typography>
           <Controller 
             name='password'
@@ -80,37 +100,18 @@ const LoginPage = () => {
               />
             )}
           />
-          <Typography variant='error'>
-            {errors.password?.message}
-          </Typography>
-          <Link
-            variant='body2'
-            underline='hover'
-            sx={loginCardStyles.forgotLink}
-          >
-            Forgot password?
-          </Link>
-          <Button 
+          <LoadingButton 
+            loading={loadingSignup}
+            loadingPosition='end'
             variant='contained' size='large' fullWidth
-            onClick={handleSubmit(onSubmitLogin)}
+            onClick={handleSubmit(onSubmitSignup)}
           >
-            <Typography sx={{textTransform: 'none'}} variant='body2'>Log In</Typography>
-          </Button>
-          <Typography variant='body2'>
-            Need to create an account?{" "} 
-            <Link
-              variant='body2'
-              underline='hover'
-              sx={loginCardStyles.signUpLink}
-              href='/signup'
-            >
-              Sign Up
-            </Link>
-          </Typography>
+            <Typography sx={{textTransform: 'none'}} variant='body2'>Sign up</Typography>
+          </LoadingButton>
         </Stack>
       </Card>
     </div>
   )
 }
 
-export default LoginPage
+export default SignupPage

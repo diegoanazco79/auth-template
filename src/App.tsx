@@ -3,22 +3,29 @@ import { ThemeProvider } from '@mui/material/styles'
 
 import DashboardPage from "./pages/dashboard"
 import LoginPage from "./pages/login"
+import SignupPage from "./pages/signup"
 
 import theme from "./theme"
 
 import "./App.css"
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
+
+const queryClient = new QueryClient()
 
 function App() {
   return (
-    <ThemeProvider theme={theme}>
-      <BrowserRouter>
-        <Routes>
-          <Route index element={<DashboardPage />} />
-          <Route path='/' element={<DashboardPage />} />
-          <Route path='/login' element={<LoginPage />} />
-        </Routes>
-      </BrowserRouter>
-    </ThemeProvider>
+    <QueryClientProvider client={queryClient}>
+      <ThemeProvider theme={theme}>
+        <BrowserRouter>
+          <Routes>
+            <Route index element={<DashboardPage />} />
+            <Route path='/' element={<DashboardPage />} />
+            <Route path='/login' element={<LoginPage />} />
+            <Route path='signup' element={<SignupPage />} />
+          </Routes>
+        </BrowserRouter>
+      </ThemeProvider>
+    </QueryClientProvider>
   )
 }
 

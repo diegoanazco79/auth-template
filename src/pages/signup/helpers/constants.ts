@@ -1,0 +1,1 @@
+export const REGULAR_USER = '50db3a9a-8817-4f77-b1a3-ac6316051174'
