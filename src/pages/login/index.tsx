@@ -5,6 +5,7 @@ import {
 
 import useLogin from "./hooks/useLogin"
 
+import cocodrileLogin from '../../assets/cocodrile-login.png'
 import Visibility from "@mui/icons-material/Visibility"
 import VisibilityOff from "@mui/icons-material/VisibilityOff"
 
@@ -21,7 +22,8 @@ const LoginPage = () => {
   return (
     <div style={mainContainerStyles}>
       <Card sx={loginCardStyles}>
-        <Stack spacing={2}>
+        <img src={cocodrileLogin} width={110} style={{margin:15}}/>
+        <Stack spacing={3}>
           <Typography variant='h4'>Log In</Typography>
           <Button variant='outlined' fullWidth>
             Google Login Button

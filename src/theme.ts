@@ -1,6 +1,11 @@
 import { createTheme } from "@mui/material/styles"
 
 const theme = createTheme({
+  palette: {
+    primary: {
+      main: "#087433"
+    }
+  },
   typography: {
     fontFamily: ["Montserrat"].join(","),
   },
@@ -21,6 +26,7 @@ const theme = createTheme({
     MuiFormLabel: {
       styleOverrides: {
         root: {
+          marginTop: "3px",
           fontSize: "14px",
         },
       },
