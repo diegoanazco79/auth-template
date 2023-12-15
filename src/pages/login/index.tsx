@@ -26,7 +26,9 @@ const LoginPage = () => {
           <Button variant='outlined' fullWidth>
             Google Login Button
           </Button>
-          <Divider>Or</Divider>
+          <Divider>
+            <Typography variant='body2'>Or</Typography>
+          </Divider>
           <Typography variant='body1'>Log in using email address</Typography>
           <TextField
             label='Email Address'
@@ -47,7 +49,7 @@ const LoginPage = () => {
                   onClick={handleClickShowPassword}
                   onMouseDown={handleMouseDownPassword}
                 >
-                  {showPassword ? <VisibilityOff /> : <Visibility />}
+                  {showPassword ? <VisibilityOff sx={{width:20}} /> : <Visibility sx={{width:20}} />}
                 </IconButton>
               ),
             }}
@@ -61,8 +63,8 @@ const LoginPage = () => {
           >
             Forgot password?
           </Link>
-          <Button variant='contained' fullWidth>
-            Log In
+          <Button variant='contained' size='large' fullWidth>
+            <Typography sx={{textTransform: 'none'}} variant='body2'>Log In</Typography>
           </Button>
           <Typography variant='body2'>
             Need to create an account?  
