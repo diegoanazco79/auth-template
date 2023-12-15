@@ -10,11 +10,13 @@ export const loginCardStyles = {
   width: 432,
   boxShadow: '0px 3px 5px rgba(0, 0, 0, 0.15)',
   height: 'fit-content',
-  cardBody: {
-    padding: 0,
+  forgotLink: {
+    marginTop: '3px !important' ,
+    cursor: "pointer",
+    width: "fit-content",
+    marginLeft: "auto !important",
   },
-  title: {
-    marginTop: 10,
-    marginBottom: 10,
+  signUpLink: {
+    cursor: "pointer",
   }
 }
