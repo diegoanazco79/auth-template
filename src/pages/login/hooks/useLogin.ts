@@ -1,17 +1,37 @@
+import { useForm } from "react-hook-form"
 import { useState } from "react"
+import { yupResolver } from "@hookform/resolvers/yup"
+import * as yup from "yup"
+
+interface LoginFormInput {
+  email: string
+  password: string
+}
 
 const useLogin = () => {
   const [showPassword, setShowPassword] = useState(false)
-  const [password, setPassword] = useState("")
   const [passwordVisited, setPasswordVisited] = useState(false)
 
+  const loginFormSchema = yup.object().shape({
+    email: yup.string().email('* Must be a valid email').required('* Email is required'),
+    password: yup.string().required('* Password is required'),
+  })
+
+  const { control, formState:{errors},  handleSubmit } = useForm({
+    defaultValues: {
+      email: '',
+      password: '',
+    },
+    resolver: yupResolver(loginFormSchema),
+  })
+
   /**
-   * @description Function to handle the visibility of the password
+   * Function to handle the visibility of the password
    */
   const handleClickShowPassword = () => setShowPassword((show) => !show)
 
   /**
-   * @description Function to handle the visibility of the password
+   * Function to handle the visibility of the password
    */
   const handleMouseDownPassword = (
     event: React.MouseEvent<HTMLButtonElement>
@@ -20,31 +40,33 @@ const useLogin = () => {
   }
 
   /**
-   * @description Function to handle the visibility of the password
+   * Function to handle the visibility of the password
    */
   const handleTextFieldFocus = () => {
     setPasswordVisited(true)
   }
 
   /**
-   * @description Function to handle the visibility of the password
+   * Function to handle the visibility of the password
    */
   const handleTextFieldBlur = () => {
     setPasswordVisited(false)
   }
 
   /**
-   * @description Function to handle the visibility of the password
+   * Function to handle the visibility of the password
+   * @param data
    */
-  const handlePasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setPassword(event.target.value)
+  const onSubmitLogin = (data: LoginFormInput) => {
+    console.log(data)
   }
 
   return {
     // States
     showPassword,
-    password,
     passwordVisited,
+    control,
+    errors,
 
     // Functions States
 
@@ -53,7 +75,8 @@ const useLogin = () => {
     handleMouseDownPassword,
     handleTextFieldFocus,
     handleTextFieldBlur,
-    handlePasswordChange
+    onSubmitLogin,
+    handleSubmit,
   }
 }
 

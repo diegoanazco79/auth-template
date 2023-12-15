@@ -2,6 +2,7 @@ import {
   Button, Card, Divider, IconButton, Link, Stack, TextField,
   Typography
 } from "@mui/material"
+import { Controller } from "react-hook-form"
 
 import useLogin from "./hooks/useLogin"
 
@@ -14,9 +15,10 @@ import { loginCardStyles, mainContainerStyles } from "./styles"
 const LoginPage = () => {
 
   const {
-    password, showPassword, passwordVisited,
-    handlePasswordChange, handleClickShowPassword, handleMouseDownPassword,
-    handleTextFieldFocus, handleTextFieldBlur,
+    showPassword, passwordVisited, control, errors,
+    handleClickShowPassword, handleMouseDownPassword,
+    handleTextFieldFocus, handleTextFieldBlur, handleSubmit,
+    onSubmitLogin
   } = useLogin()
 
   return (
@@ -32,32 +34,55 @@ const LoginPage = () => {
             <Typography variant='body2'>Or</Typography>
           </Divider>
           <Typography variant='body1'>Log in using email address</Typography>
-          <TextField
-            label='Email Address'
-            variant='filled'
-            placeholder='Type your email'
+          <Controller
+            name='email'
+            control={control}
+            render={({ field }) => (
+              <TextField
+                {...field}
+                error={errors.email?.message !== undefined}
+                label='Email Address'
+                variant='filled'
+                placeholder='Type your email'
+              />
+            )}
           />
-          <TextField
-            variant='filled'
-            label='Password'
-            value={password}
-            placeholder='Type your password'
-            type={showPassword ? "text" : "password"}
-            onChange={handlePasswordChange}
-            InputProps={{
-              endAdornment: (passwordVisited || password !== "") && (
-                <IconButton
-                  aria-label='toggle password visibility'
-                  onClick={handleClickShowPassword}
-                  onMouseDown={handleMouseDownPassword}
-                >
-                  {showPassword ? <VisibilityOff sx={{width:20}} /> : <Visibility sx={{width:20}} />}
-                </IconButton>
-              ),
-            }}
-            onFocus={handleTextFieldFocus}
-            onBlur={handleTextFieldBlur}
+          <Typography variant='error'>
+            {errors.email?.message}
+          </Typography>
+          <Controller 
+            name='password'
+            control={control}
+            render={({ field }) => (
+              <TextField
+                {...field}
+                variant='filled'
+                label='Password'
+                placeholder='Type your password'
+                error={errors.password?.message !== undefined}
+                type={showPassword ? "text" : "password"}
+                InputProps={{
+                  endAdornment: (passwordVisited || field.value !== "") && (
+                    <IconButton
+                      aria-label='toggle password visibility'
+                      onClick={handleClickShowPassword}
+                      onMouseDown={handleMouseDownPassword}
+                    >
+                      {showPassword 
+                        ? <VisibilityOff color='primary' sx={{width:20}} /> 
+                        : <Visibility color='primary' sx={{width:20}} />
+                      }
+                    </IconButton>
+                  ),
+                }}
+                onFocus={handleTextFieldFocus}
+                onBlur={handleTextFieldBlur}
+              />
+            )}
           />
+          <Typography variant='error'>
+            {errors.password?.message}
+          </Typography>
           <Link
             variant='body2'
             underline='hover'
@@ -65,7 +90,10 @@ const LoginPage = () => {
           >
             Forgot password?
           </Link>
-          <Button variant='contained' size='large' fullWidth>
+          <Button 
+            variant='contained' size='large' fullWidth
+            onClick={handleSubmit(onSubmitLogin)}
+          >
             <Typography sx={{textTransform: 'none'}} variant='body2'>Log In</Typography>
           </Button>
           <Typography variant='body2'>
