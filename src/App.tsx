@@ -1,7 +1,9 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom"
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import { ThemeProvider } from '@mui/material/styles'
 
 import DashboardPage from "./pages/dashboard"
+import ForgotPasswordPage from "./pages/forgot-password"
 import LoginPage from "./pages/login"
 import SignupPage from "./pages/signup"
 import VerifyEmailPage from "./pages/verify-email"
@@ -9,7 +11,6 @@ import VerifyEmailPage from "./pages/verify-email"
 import theme from "./theme"
 
 import "./App.css"
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 
 const queryClient = new QueryClient()
 
@@ -24,6 +25,7 @@ function App() {
             <Route path='/login' element={<LoginPage />} />
             <Route path='/signup' element={<SignupPage />} />
             <Route path='/verify/:token' element={<VerifyEmailPage />} />
+            <Route path='/forgot-password' element={<ForgotPasswordPage />} />
           </Routes>
         </BrowserRouter>
       </ThemeProvider>

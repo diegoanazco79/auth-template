@@ -87,6 +87,7 @@ const LoginPage = () => {
             variant='body2'
             underline='hover'
             sx={loginCardStyles.forgotLink}
+            href='/forgot-password'
           >
             Forgot password?
           </Link>
