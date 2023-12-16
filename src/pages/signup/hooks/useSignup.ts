@@ -6,6 +6,7 @@ import * as yup from "yup"
 import Swal from "sweetalert2"
 
 import useAuthApi from "../../../api/auth"
+import { signupErrorsMapping } from "../helpers/utils"
 
 import { REGULAR_USER } from "../helpers/constants"
 
@@ -83,15 +84,25 @@ const useSignup = () => {
         confirmButtonText: 'Ok'
       }).then(() => {
         reset()
+        setShowPassword(false)
       })
     },
-    onError: (error) => {
-      Swal.fire({
-        title: 'Error!',
-        text: error.message,
-        icon: 'error',
-        confirmButtonText: 'Ok'
-      })
+    onError: (error: Error) => {
+      const errorJson = JSON.parse(error.message)
+      const errorMessages = errorJson.map((error: { msg: string }) => error.msg)
+      if (errorMessages.length > 0) {
+        void Swal.fire({
+          title: 'Oops...',
+          html: signupErrorsMapping(errorMessages).join('<br />'),
+          icon: 'error'
+        })
+      } else {
+        void Swal.fire({
+          title: 'Oops...',
+          text: 'Algo salió mal, por favor vuelve a intentarlo. Si el problema persiste comunícate con soporte',
+          icon: 'error'
+        })
+      }
     }
   })
 
