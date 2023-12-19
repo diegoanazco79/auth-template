@@ -5,3 +5,8 @@ export interface SignupFormInputApi {
   password: string;
   role: string;
 }
+
+export interface ResetPasswordFormApi {
+  password: string;
+  token: string;
+}

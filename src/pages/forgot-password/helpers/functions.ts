@@ -5,7 +5,7 @@ import { findKey, includes } from "lodash"
  * @param errors The errors from the server.
  * @returns The mapped errors.
  */
-export const signupErrorsMapping = (errors: string[]) => {
+export const forgotPasswordErrorsMapping = (errors: string[]) => {
   const keywords: { [key: string]: string } = {
     "email does not exist": "The email address is not registered.",
   }

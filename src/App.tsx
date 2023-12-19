@@ -5,6 +5,7 @@ import { ThemeProvider } from '@mui/material/styles'
 import DashboardPage from "./pages/dashboard"
 import ForgotPasswordPage from "./pages/forgot-password"
 import LoginPage from "./pages/login"
+import ResetPasswordPage from "./pages/reset-password"
 import SignupPage from "./pages/signup"
 import VerifyEmailPage from "./pages/verify-email"
 
@@ -26,6 +27,7 @@ function App() {
             <Route path='/signup' element={<SignupPage />} />
             <Route path='/verify/:token' element={<VerifyEmailPage />} />
             <Route path='/forgot-password' element={<ForgotPasswordPage />} />
+            <Route path='/change-password/:token' element={<ResetPasswordPage />} />
           </Routes>
         </BrowserRouter>
       </ThemeProvider>

@@ -5,14 +5,14 @@ import * as yup from "yup"
 import Swal from "sweetalert2"
 
 import useAuthApi from "../../../api/auth"
-import { signupErrorsMapping } from "../helpers/functions"
+import { forgotPasswordErrorsMapping } from "../helpers/functions"
 
 interface ForgotPasswordFormInput {
   email: string
 }
 
 const useForgotPassword = () => {
-  const signupFormSchema = yup.object().shape({
+  const forgotPasswordFormSchema = yup.object().shape({
     email: yup.string().email('* Must be a valid email').required('* Email is required'),
   })
 
@@ -21,10 +21,10 @@ const useForgotPassword = () => {
     defaultValues: {
       email: '',
     },
-    resolver: yupResolver(signupFormSchema),
+    resolver: yupResolver(forgotPasswordFormSchema),
   })
 
-  const {forgotPassword} = useAuthApi()
+  const { forgotPassword } = useAuthApi()
 
   /**
    * Mutation to send the email to reset the password
@@ -47,13 +47,13 @@ const useForgotPassword = () => {
       if (errorMessages.length > 0) {
         void Swal.fire({
           title: 'Oops...',
-          html: signupErrorsMapping(errorMessages).join('<br />'),
+          html: forgotPasswordErrorsMapping(errorMessages).join('<br />'),
           icon: 'error'
         })
       } else {
         void Swal.fire({
           title: 'Oops...',
-          text: 'Algo salió mal, por favor vuelve a intentarlo. Si el problema persiste comunícate con soporte',
+          text: 'Something went wrong, please try again. If the problem persists, contact support.',
           icon: 'error'
         })
       }

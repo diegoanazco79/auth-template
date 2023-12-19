@@ -99,7 +99,7 @@ const useSignup = () => {
       } else {
         void Swal.fire({
           title: 'Oops...',
-          text: 'Algo salió mal, por favor vuelve a intentarlo. Si el problema persiste comunícate con soporte',
+          text: 'Something went wrong, please try again. If the problem persists, contact support.',
           icon: 'error'
         })
       }

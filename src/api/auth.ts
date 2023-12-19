@@ -1,6 +1,6 @@
 import axios, { isAxiosError } from "axios"
 
-import { SignupFormInputApi } from "./interfaces/auth"
+import { ResetPasswordFormApi, SignupFormInputApi } from "./interfaces/auth"
 import { API_URL } from "./helpers/constants"
 
 const useAuthApi = () => {
@@ -62,10 +62,33 @@ const useAuthApi = () => {
     }
   }
 
+  /**
+   * Handles a reset password request to the API.
+   * @param resetPasswordForm The reset password form.
+   */
+  const resetPassword = async (resetPasswordForm: ResetPasswordFormApi) => {
+    try {
+      const response = await axios.post(
+        `${API_URL}/auth/reset-password`,
+        resetPasswordForm
+      )
+      return response.data
+    } catch (error) {
+      if (isAxiosError(error)) {
+        if (error.response) {
+          const serializedErrors = JSON.stringify(error.response.data.errors)
+          throw new Error(serializedErrors)
+        }
+      }
+      throw new Error("An error occurred during the reset password process.")
+    }
+  }
+
   return {
     signupService,
     verifyEmail,
-    forgotPassword
+    forgotPassword,
+    resetPassword
   }
 }
 

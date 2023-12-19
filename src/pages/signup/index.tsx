@@ -100,6 +100,9 @@ const SignupPage = () => {
               />
             )}
           />
+          <Typography variant='error'>
+            {errors.password?.message}
+          </Typography>  
           <LoadingButton 
             loading={loadingSignup}
             loadingPosition='end'
