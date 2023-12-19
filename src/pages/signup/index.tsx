@@ -105,7 +105,6 @@ const SignupPage = () => {
           </Typography>  
           <LoadingButton 
             loading={loadingSignup}
-            loadingPosition='end'
             variant='contained' size='large' fullWidth
             onClick={handleSubmit(onSubmitSignup)}
           >

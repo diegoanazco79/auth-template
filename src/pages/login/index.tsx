@@ -2,6 +2,7 @@ import {
   Button, Card, Divider, IconButton, Link, Stack, TextField,
   Typography
 } from "@mui/material"
+import { LoadingButton } from "@mui/lab"
 import { Controller } from "react-hook-form"
 
 import useLogin from "./hooks/useLogin"
@@ -15,7 +16,7 @@ import { loginCardStyles, mainContainerStyles } from "./styles"
 const LoginPage = () => {
 
   const {
-    showPassword, passwordVisited, control, errors,
+    showPassword, passwordVisited, control, errors, loadingLogin,
     handleClickShowPassword, handleMouseDownPassword,
     handleTextFieldFocus, handleTextFieldBlur, handleSubmit,
     onSubmitLogin
@@ -91,12 +92,13 @@ const LoginPage = () => {
           >
             Forgot password?
           </Link>
-          <Button 
+          <LoadingButton 
+            loading={loadingLogin}
             variant='contained' size='large' fullWidth
             onClick={handleSubmit(onSubmitLogin)}
           >
             <Typography sx={{textTransform: 'none'}} variant='body2'>Log In</Typography>
-          </Button>
+          </LoadingButton>
           <Typography variant='body2'>
             Need to create an account?{" "} 
             <Link

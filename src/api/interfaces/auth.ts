@@ -10,3 +10,8 @@ export interface ResetPasswordFormApi {
   password: string;
   token: string;
 }
+
+export interface LoginFormApi {
+  email: string;
+  password: string;
+}

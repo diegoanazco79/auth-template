@@ -38,7 +38,6 @@ const ForgotPasswordPage = () => {
           <Typography variant='error'>{errors.email?.message}</Typography>
           <LoadingButton 
             loading={loadingSendEmail}
-            loadingPosition='end'
             variant='contained' size='large' fullWidth
             onClick={handleSubmit(onSubmitForgotPassword)}
           >

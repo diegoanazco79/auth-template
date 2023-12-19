@@ -57,7 +57,6 @@ const ResetPasswordPage = () => {
           </Typography>  
           <LoadingButton 
             loading={loadingResetPassword}
-            loadingPosition='end'
             variant='contained' size='large' fullWidth
             onClick={handleSubmit(onSubmitResetPassword)}
           >

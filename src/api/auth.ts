@@ -1,6 +1,6 @@
 import axios, { isAxiosError } from "axios"
 
-import { ResetPasswordFormApi, SignupFormInputApi } from "./interfaces/auth"
+import { LoginFormApi, ResetPasswordFormApi, SignupFormInputApi } from "./interfaces/auth"
 import { API_URL } from "./helpers/constants"
 
 const useAuthApi = () => {
@@ -84,11 +84,31 @@ const useAuthApi = () => {
     }
   }
 
+  /**
+   * Handles a login request to the API.
+   * @param loginForm The login form.
+   */
+  const loginAccount = async (loginForm: LoginFormApi) => {
+    try {
+      const response = await axios.post(`${API_URL}/auth/login`, loginForm)
+      return response.data
+    } catch (error) {
+      if (isAxiosError(error)) {
+        if (error.response) {
+          const serializedErrors = JSON.stringify(error.response.data.errors)
+          throw new Error(serializedErrors)
+        }
+      }
+      throw new Error("An error occurred during the login process.")
+    }
+  }
+
   return {
     signupService,
     verifyEmail,
     forgotPassword,
-    resetPassword
+    resetPassword,
+    loginAccount
   }
 }
 

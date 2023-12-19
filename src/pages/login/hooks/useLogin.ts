@@ -1,7 +1,14 @@
 import { useForm } from "react-hook-form"
+import { useMutation } from "@tanstack/react-query"
+import { useNavigate } from "react-router-dom"
 import { useState } from "react"
 import { yupResolver } from "@hookform/resolvers/yup"
 import * as yup from "yup"
+import Swal from "sweetalert2"
+
+import useAuthApi from "../../../api/auth"
+
+import { loginErrorsMapping } from "../helpers/utils"
 
 interface LoginFormInput {
   email: string
@@ -11,6 +18,10 @@ interface LoginFormInput {
 const useLogin = () => {
   const [showPassword, setShowPassword] = useState(false)
   const [passwordVisited, setPasswordVisited] = useState(false)
+
+  const { loginAccount } = useAuthApi()
+
+  const navigate = useNavigate()
 
   const loginFormSchema = yup.object().shape({
     email: yup.string().email('* Must be a valid email').required('* Email is required'),
@@ -23,6 +34,33 @@ const useLogin = () => {
       password: '',
     },
     resolver: yupResolver(loginFormSchema),
+  })
+
+  /**
+   * Mutation to login the user
+   */
+  const loginMutation = useMutation({
+    mutationFn: async (loginForm: LoginFormInput) => await loginAccount(loginForm),
+    onSuccess: () => {
+      navigate('/')
+    },
+    onError: (error: Error) => {
+      const errorJson = JSON.parse(error.message)
+      const errorMessages = errorJson.map((error: { msg: string }) => error.msg)
+      if (errorMessages.length > 0) {
+        void Swal.fire({
+          title: 'Oops...',
+          html: loginErrorsMapping(errorMessages).join('<br />'),
+          icon: 'error'
+        })
+      } else {
+        void Swal.fire({
+          title: 'Oops...',
+          text: 'Something went wrong, please try again. If the problem persists, contact support.',
+          icon: 'error'
+        })
+      }
+    }
   })
 
   /**
@@ -58,7 +96,7 @@ const useLogin = () => {
    * @param data 
    */
   const onSubmitLogin = (data: LoginFormInput) => {
-    console.log(data)
+    loginMutation.mutate(data)
   }
 
   return {
@@ -67,8 +105,7 @@ const useLogin = () => {
     passwordVisited,
     control,
     errors,
-
-    // Functions States
+    loadingLogin: loginMutation.isPending,
 
     // Functions
     handleClickShowPassword,
