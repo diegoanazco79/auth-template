@@ -6,9 +6,10 @@ import crocodileDashboard from '../../assets/crocodrile-dashboard.png'
 import { dashboardCardStyles, mainContainerStyles } from "./styles"
 
 const DashboardPage = () => {
-  const { user, token } = useAuthStore((state) => ({
+  const { user, token, logout } = useAuthStore((state) => ({
     user: state.user,
     token: state.token,
+    logout: state.logout
   }))
 
   return (
@@ -22,6 +23,7 @@ const DashboardPage = () => {
             </Typography>
             <Button 
               variant='contained' color='primary'
+              onClick={() => logout()}
             >
               <Typography sx={{textTransform: 'none'}} variant='body2'>Log Out</Typography>
             </Button>

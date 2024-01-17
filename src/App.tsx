@@ -34,6 +34,7 @@ function App() {
             <Route element={<ProtectedRoutes user={user} />}>
               <Route path='/' element={<DashboardPage />} />
             </Route>
+            <Route path='*' element={<h1>Not Found</h1>} />
           </Routes>
         </BrowserRouter>
       </ThemeProvider>

@@ -17,6 +17,7 @@ interface State {
 interface Actions {
   setToken: (token: string) => void
   setUser: (user: User) => void
+  logout: () => void
 }
 
 export const useAuthStore = create(persist<State & Actions>(
@@ -25,6 +26,7 @@ export const useAuthStore = create(persist<State & Actions>(
     user: null,
     setToken: (token) => set({ token }),
     setUser: (user) => set({ user }),
+    logout: () => set({ token: '', user: null }),
   }),
   {
     name: 'auth',

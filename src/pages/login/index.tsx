@@ -4,8 +4,11 @@ import {
 } from "@mui/material"
 import { LoadingButton } from "@mui/lab"
 import { Controller } from "react-hook-form"
+import { useEffect } from "react"
+import { useNavigate } from "react-router-dom"
 
 import useLogin from "./hooks/useLogin"
+import { useAuthStore } from "../../store/authStore"
 
 import cocodrileLogin from '../../assets/crocodrile-login.png'
 import Visibility from "@mui/icons-material/Visibility"
@@ -20,6 +23,13 @@ const LoginPage = () => {
     handleTextFieldFocus, handleTextFieldBlur, handleSubmit,
     onSubmitLogin
   } = useLogin()
+
+  const user = useAuthStore((state) => state.user)
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    if (user) navigate("/")
+  }, [user]); // eslint-disable-line
 
   return (
     <div style={mainContainerStyles}>
