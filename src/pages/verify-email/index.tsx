@@ -2,7 +2,7 @@ import { Button, Card, CircularProgress, Stack, Typography } from '@mui/material
 
 import useVerifyEmail from './hooks/useVerifyEmail'
 
-import cocodrileLogin from '../../assets/cocodrile-login.png'
+import cocodrileLogin from '../../assets/crocodrile-login.png'
 import { mainContainerStyles, verifyCardStyles } from "./styles"
 
 const VerifyEmailPage = () => {

@@ -7,6 +7,7 @@ import * as yup from "yup"
 import Swal from "sweetalert2"
 
 import useAuthApi from "../../../api/auth"
+import { useAuthStore } from "../../../store/authStore"
 
 import { loginErrorsMapping } from "../helpers/utils"
 
@@ -18,6 +19,11 @@ interface LoginFormInput {
 const useLogin = () => {
   const [showPassword, setShowPassword] = useState(false)
   const [passwordVisited, setPasswordVisited] = useState(false)
+
+  const { setToken, setUser } = useAuthStore(state => ({
+    setToken: state.setToken,
+    setUser: state.setUser,
+  }))
 
   const { loginAccount } = useAuthApi()
 
@@ -41,7 +47,15 @@ const useLogin = () => {
    */
   const loginMutation = useMutation({
     mutationFn: async (loginForm: LoginFormInput) => await loginAccount(loginForm),
-    onSuccess: () => {
+    onSuccess: (data) => {
+      setToken(data.token)
+      setUser({
+        firstName: data.firstName,
+        lastName: data.lastName,
+        email: data.email,
+        role: data.role.name,
+        id: data.id
+      })
       navigate('/')
     },
     onError: (error: Error) => {
