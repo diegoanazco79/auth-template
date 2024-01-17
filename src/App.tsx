@@ -5,6 +5,7 @@ import { ThemeProvider } from '@mui/material/styles'
 import DashboardPage from "./pages/dashboard"
 import ForgotPasswordPage from "./pages/forgot-password"
 import LoginPage from "./pages/login"
+import NotFoundPage from "./pages/404"
 import ResetPasswordPage from "./pages/reset-password"
 import SignupPage from "./pages/signup"
 import VerifyEmailPage from "./pages/verify-email"
@@ -34,7 +35,7 @@ function App() {
             <Route element={<ProtectedRoutes user={user} />}>
               <Route path='/' element={<DashboardPage />} />
             </Route>
-            <Route path='*' element={<h1>Not Found</h1>} />
+            <Route path='*' element={<NotFoundPage />} />
           </Routes>
         </BrowserRouter>
       </ThemeProvider>

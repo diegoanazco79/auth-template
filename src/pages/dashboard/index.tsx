@@ -31,8 +31,6 @@ const DashboardPage = () => {
         )}
       </Card>
     </div>
-     
-    
   )
 }
 
