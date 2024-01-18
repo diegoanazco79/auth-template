@@ -43,15 +43,23 @@ const LoginPage = () => {
         <form onSubmit={handleSubmit(onSubmitLogin)}>
           <Stack spacing={3}>
             <Typography variant='h4'>Log In</Typography>
-            <Box>
-              <GoogleOAuthProvider clientId={googleClientId}>
+            <Box display='flex' justifyContent='center'>
+              <GoogleOAuthProvider clientId={googleClientId} >
                 {loadingGoogleLogin ? (
                   <Box sx={googleButtonStyles}>
                     <CircularProgress size={20} />
                   </Box>
                 ): (
                   <GoogleLogin
-                    width='fit-content'
+                    containerProps={{
+                      style: {
+                        width: '100%',
+                        height: '100%',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                      }
+                    }}
                     onSuccess={(res) => onGoogleLogin(res)}
                   />
                 )}
