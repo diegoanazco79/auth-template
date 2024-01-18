@@ -26,7 +26,7 @@ export const googleButtonStyles = {
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
-  width: 400,
+  width: '100%',
   height: 42,
   borderRadius: '4px',
   border: '1px solid #dadce0',

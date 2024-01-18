@@ -43,7 +43,7 @@ const LoginPage = () => {
         <form onSubmit={handleSubmit(onSubmitLogin)}>
           <Stack spacing={3}>
             <Typography variant='h4'>Log In</Typography>
-            <Box sx={{marginX: 'auto !important'}}>
+            <Box>
               <GoogleOAuthProvider clientId={googleClientId}>
                 {loadingGoogleLogin ? (
                   <Box sx={googleButtonStyles}>
@@ -51,7 +51,7 @@ const LoginPage = () => {
                   </Box>
                 ): (
                   <GoogleLogin
-                    width={500}
+                    width='fit-content'
                     onSuccess={(res) => onGoogleLogin(res)}
                   />
                 )}
