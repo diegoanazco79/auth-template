@@ -1,30 +1,54 @@
-# React + TypeScript + Vite
+# Auth Template
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This project provides a robust and reusable template for easily implementing authentication and authorization features in web applications. Designed with flexibility in mind, this template allows for the quick integration of essential login and access control features, enabling developers to focus on building the specific logic of their applications.
 
-Currently, two official plugins are available:
+Explore a live demo of the project [here](https://auth-template-topaz.vercel.app/login).
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-## Expanding the ESLint configuration
+## Features
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- **Google Authentication**: Allows users to log in using their Google account.
+  
+- **Normal Authentication (password, email)**: Users can register and log in using an email and password.
+  
+- **Password Recovery**: Functionality for users to recover their password in case of forgetfulness.
+  
+- **User Registration**: Enables new users to register on the platform.
 
-- Configure the top-level `parserOptions` property like this:
+## Technologies Used
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
+- [Vite](https://vitejs.dev/): Fast and lightweight bundler for web applications.
+  
+- [Material UI](https://mui.com/): React user interface components for an attractive visual design.
+  
+- [React Router](https://reactrouter.com/): Single-page application navigation with React.
+  
+- [Zustand](https://github.com/pmndrs/zustand): Hassle-free global state for React.
+  
+- [React Query](https://react-query.tanstack.com/): Manage, share, and automatically update the application state.
+  
+- [Axios](https://axios-http.com/): Promise-based HTTP client for the browser and Node.js.
+  
+- [React Hook Form](https://react-hook-form.com/): Library for managing forms in React.
+  
+- [Yup](https://github.com/jquense/yup): Schema validation for JavaScript and TypeScript.
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+## Environment Variables
+
+Make sure to configure the following environment variables before running the application:
+
+- **VITE_GOOGLE_AUTH_CLIENT_ID**: Google Authentication client ID. You can obtain this by creating a project in the [Google Developers Console](https://console.developers.google.com/).
+  
+- **VITE_API_URL**: URL of the API used for authentication. Ensure it's the correct URL for your backend instance.
+
+## Installation
+
+1. Clone this repository.
+2. Run `npm install` to install the dependencies.
+3. Set up the environment variables as per the above instructions.
+4. Run `npm run dev` to start the application.
+
+## Contributions
+
+If you encounter any issues or have suggestions to improve the project, feel free to create an issue or pull request!
+
