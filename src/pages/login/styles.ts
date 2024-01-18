@@ -21,3 +21,13 @@ export const loginCardStyles = {
     cursor: "pointer",
   }
 }
+
+export const googleButtonStyles = {
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  width: 400,
+  height: 42,
+  borderRadius: '4px',
+  border: '1px solid #dadce0',
+}

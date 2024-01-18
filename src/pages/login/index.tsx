@@ -1,11 +1,13 @@
 import {
-  Button, Card, Divider, IconButton, Link, Stack, TextField,
+  Box,
+  Card, CircularProgress, Divider, IconButton, Link, Stack, TextField,
   Typography
 } from "@mui/material"
 import { LoadingButton } from "@mui/lab"
 import { Controller } from "react-hook-form"
 import { useEffect } from "react"
 import { useNavigate } from "react-router-dom"
+import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google'
 
 import useLogin from "./hooks/useLogin"
 import { useAuthStore } from "../../store/authStore"
@@ -14,15 +16,18 @@ import cocodrileLogin from '../../assets/crocodrile-login.png'
 import Visibility from "@mui/icons-material/Visibility"
 import VisibilityOff from "@mui/icons-material/VisibilityOff"
 
-import { loginCardStyles, mainContainerStyles } from "./styles"
+import { googleButtonStyles, loginCardStyles, mainContainerStyles } from "./styles"
 
 const LoginPage = () => {
   const {
     showPassword, passwordVisited, control, errors, loadingLogin,
+    loadingGoogleLogin,
     handleClickShowPassword, handleMouseDownPassword,
     handleTextFieldFocus, handleTextFieldBlur, handleSubmit,
-    onSubmitLogin
+    onSubmitLogin, onGoogleLogin
   } = useLogin()
+
+  const googleClientId = import.meta.env.VITE_GOOGLE_AUTH_CLIENT_ID
 
   const user = useAuthStore((state) => state.user)
   const navigate = useNavigate()
@@ -38,9 +43,20 @@ const LoginPage = () => {
         <form onSubmit={handleSubmit(onSubmitLogin)}>
           <Stack spacing={3}>
             <Typography variant='h4'>Log In</Typography>
-            <Button variant='outlined' fullWidth>
-            Google Login Button
-            </Button>
+            <Box sx={{marginX: 'auto !important'}}>
+              <GoogleOAuthProvider clientId={googleClientId}>
+                {loadingGoogleLogin ? (
+                  <Box sx={googleButtonStyles}>
+                    <CircularProgress size={20} />
+                  </Box>
+                ): (
+                  <GoogleLogin
+                    width={500}
+                    onSuccess={(res) => onGoogleLogin(res)}
+                  />
+                )}
+              </GoogleOAuthProvider>
+            </Box>
             <Divider>
               <Typography variant='body2'>Or</Typography>
             </Divider>
@@ -55,6 +71,7 @@ const LoginPage = () => {
                   label='Email Address'
                   variant='filled'
                   placeholder='Type your email'
+                  disabled={loadingGoogleLogin || loadingLogin}
                 />
               )}
             />
@@ -88,6 +105,7 @@ const LoginPage = () => {
                   }}
                   onFocus={handleTextFieldFocus}
                   onBlur={handleTextFieldBlur}
+                  disabled={loadingGoogleLogin || loadingLogin}
                 />
               )}
             />
@@ -105,6 +123,7 @@ const LoginPage = () => {
             <LoadingButton
               type='submit' 
               loading={loadingLogin}
+              disabled={loadingGoogleLogin || loadingLogin}
               variant='contained' size='large' fullWidth
             >
               <Typography sx={{textTransform: 'none'}} variant='body2'>Log In</Typography>

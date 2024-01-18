@@ -5,6 +5,7 @@ import { useState } from "react"
 import { yupResolver } from "@hookform/resolvers/yup"
 import * as yup from "yup"
 import Swal from "sweetalert2"
+import { CredentialResponse } from '@react-oauth/google'
 
 import useAuthApi from "../../../api/auth"
 import { useAuthStore } from "../../../store/authStore"
@@ -25,7 +26,7 @@ const useLogin = () => {
     setUser: state.setUser,
   }))
 
-  const { loginAccount } = useAuthApi()
+  const { loginAccount, loginGoogleAccount } = useAuthApi()
 
   const navigate = useNavigate()
 
@@ -47,6 +48,41 @@ const useLogin = () => {
    */
   const loginMutation = useMutation({
     mutationFn: async (loginForm: LoginFormInput) => await loginAccount(loginForm),
+    onSuccess: (data) => {
+      setToken(data.token)
+      setUser({
+        firstName: data.firstName,
+        lastName: data.lastName,
+        email: data.email,
+        role: data.role.name,
+        id: data.id
+      })
+      navigate('/')
+    },
+    onError: (error: Error) => {
+      const errorJson = JSON.parse(error.message)
+      const errorMessages = errorJson.map((error: { msg: string }) => error.msg)
+      if (errorMessages.length > 0) {
+        void Swal.fire({
+          title: 'Oops...',
+          html: loginErrorsMapping(errorMessages).join('<br />'),
+          icon: 'error'
+        })
+      } else {
+        void Swal.fire({
+          title: 'Oops...',
+          text: 'Something went wrong, please try again. If the problem persists, contact support.',
+          icon: 'error'
+        })
+      }
+    }
+  })
+
+  /**
+   * Mutation to Google login the user
+   */
+  const googleLoginMutation = useMutation({
+    mutationFn: async (token: string) => await loginGoogleAccount(token),
     onSuccess: (data) => {
       setToken(data.token)
       setUser({
@@ -113,6 +149,14 @@ const useLogin = () => {
     loginMutation.mutate(data)
   }
 
+  /**
+   * Function to handle the Google form submit
+   * @param response  
+   */
+  const onGoogleLogin = (response: CredentialResponse) => {
+    googleLoginMutation.mutate(response.credential ?? '')
+  }
+
   return {
     // States
     showPassword,
@@ -120,6 +164,7 @@ const useLogin = () => {
     control,
     errors,
     loadingLogin: loginMutation.isPending,
+    loadingGoogleLogin: googleLoginMutation.isPending,
 
     // Functions
     handleClickShowPassword,
@@ -128,6 +173,7 @@ const useLogin = () => {
     handleTextFieldBlur,
     onSubmitLogin,
     handleSubmit,
+    onGoogleLogin
   }
 }
 

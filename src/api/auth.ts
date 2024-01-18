@@ -1,7 +1,8 @@
 import axios, { isAxiosError } from "axios"
 
 import { LoginFormApi, ResetPasswordFormApi, SignupFormInputApi } from "./interfaces/auth"
-import { API_URL } from "./helpers/constants"
+
+const API_URL = import.meta.env.VITE_API_URL
 
 const useAuthApi = () => {
   /**
@@ -103,12 +104,33 @@ const useAuthApi = () => {
     }
   }
 
+  /**
+   * Handles a Google login request to the API.
+   * @param token The Google token.
+   */
+  const loginGoogleAccount = async (token: string) => {
+    try {
+      const response = await axios.post(`${API_URL}/auth/google-login`, {
+        token,
+      })
+      return response.data
+    } catch (error) {
+      if (isAxiosError(error)) {
+        if (error.response) {
+          const serializedErrors = JSON.stringify(error.response.data.errors)
+          throw new Error(serializedErrors)
+        }
+      }
+    }
+  }
+
   return {
     signupService,
     verifyEmail,
     forgotPassword,
     resetPassword,
-    loginAccount
+    loginAccount,
+    loginGoogleAccount
   }
 }
 
